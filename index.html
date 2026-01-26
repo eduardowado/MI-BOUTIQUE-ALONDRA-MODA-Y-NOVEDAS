@@ -453,10 +453,13 @@
   function salirAdmin() { $('#admin-panel').fadeOut(); $('#client-view').fadeIn(); }
 
   // --- STOCK ---
-  function cargarInventarioTabla() { 
+function cargarInventarioTabla() { 
       $('#tablaInventario tbody').html('<tr><td colspan="5" class="text-center py-3">Cargando...</td></tr>'); 
       selectedIds.clear(); updateBatchUI(); 
       fetch(API_URL+"?action=getInventory").then(r=>r.json()).then(data=>{ 
+          // ORDENAR: Mayor a menor stock
+          data.sort((a, b) => parseInt(b.stock) - parseInt(a.stock));
+          
           let h=''; 
           data.forEach(i=>{ 
               let imgThumb = (i.img && i.img.length>0) ? i.img[0] : '';
@@ -697,5 +700,6 @@
 
 </body>
 </html>
+
 
 
